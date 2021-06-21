@@ -1,6 +1,6 @@
 package org.dk.selenk.klocator.locatorbuilder.predicatebuilder
 
-import org.dk.selenk.klocator.attribute.Attribute
+import org.dk.selenk.common.attribute.Attribute
 
 class XpathPredicateBuilder : PredicateBuilder<XpathPredicateBuilder>() {
 

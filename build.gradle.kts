@@ -1,4 +1,4 @@
-group = "org.dk"
+group = "org.dk.selenk.klokator"
 version = "1.0-SNAPSHOT"
 
 plugins {
@@ -16,4 +16,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.1.0")
     testImplementation("io.mockk:mockk:1.11.0")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
+}
+
+tasks {
+    test {
+        useJUnitPlatform {  }
+    }
 }

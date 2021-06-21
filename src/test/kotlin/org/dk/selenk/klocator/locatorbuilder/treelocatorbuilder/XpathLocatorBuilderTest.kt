@@ -2,18 +2,18 @@ package org.dk.selenk.klocator.locatorbuilder.treelocatorbuilder
 
 import io.mockk.every
 import io.mockk.mockk
-import org.dk.selenk.AutomationType
-import org.dk.selenk.SelenKConfig
-import org.dk.selenk.klocator.attribute.Id
-import org.dk.selenk.klocator.attribute.Name
+import org.dk.selenk.common.AutomationType
+import org.dk.selenk.common.SelenKConfig
+import org.dk.selenk.common.attribute.Id
+import org.dk.selenk.common.attribute.Name
+import org.dk.selenk.common.widget.Button
+import org.dk.selenk.common.widget.StaticText
+import org.dk.selenk.klocator.locatorbuilder.predicatebuilder.PredicateBuilder.Companion.asPredicateString
 import org.dk.selenk.klocator.locatorbuilder.predicatebuilder.XpathPredicateBuilder
 import org.dk.selenk.klocator.locatorbuilder.treelocatorbuilder.XpathLocatorBuilder.Companion.xpath
-import org.dk.selenk.klocator.widget.Button
-import org.dk.selenk.klocator.widget.StaticText
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.platform.commons.annotation.Testable
 import org.openqa.selenium.By
 
 class XpathLocatorBuilderTest {
@@ -23,9 +23,10 @@ class XpathLocatorBuilderTest {
             "or contains(${Id.asPredicateString(XpathPredicateBuilder())}, testId)]" +
             "/following-sibling::${StaticText.widget()}[${Id.asPredicateString(XpathPredicateBuilder())} = testId1]" +
             "/preceding-sibling::${StaticText.widget()}[contains(${Id.asPredicateString(XpathPredicateBuilder())}, testId2)]" +
-            "/${Button.widget()}[not(contains(${Id.asPredicateString(XpathPredicateBuilder())}, testId2))]")
+            "/${Button.widget()}[not(contains(${Id.asPredicateString(XpathPredicateBuilder())}, testId2))] | " +
+            "//button[]")
     }
-    private val xpath: (AutomationType) -> By = {
+    private val xpathLocator: (AutomationType) -> By = {
         xpath {
             relative(Button) { Name isEquals "testText" or { Id contains "testId" } }
             followingSibling(StaticText) { Id isEquals "testId1" }
@@ -39,7 +40,7 @@ class XpathLocatorBuilderTest {
         val config: SelenKConfig = mockk()
         every { config.automationType } returns AutomationType.Web
 
-        val xpath = xpath(config.automationType)
+        val xpath = xpathLocator(config.automationType)
         assertThat(xpath, `is`(expectedLocatorString(config.automationType)))
     }
 
@@ -49,7 +50,7 @@ class XpathLocatorBuilderTest {
 
         every { config.automationType } returns AutomationType.UiAutomator2
 
-        val xpath = xpath(config.automationType)
+        val xpath = xpathLocator(config.automationType)
         assertThat(xpath, `is`(expectedLocatorString(config.automationType)))
     }
 
@@ -59,7 +60,7 @@ class XpathLocatorBuilderTest {
 
         every { config.automationType } returns AutomationType.XcUiTest
 
-        val xpath = xpath(config.automationType)
+        val xpath = xpathLocator(config.automationType)
         assertThat(xpath, `is`(expectedLocatorString(config.automationType)))
     }
 }

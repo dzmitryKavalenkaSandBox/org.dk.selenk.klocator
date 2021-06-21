@@ -1,7 +1,7 @@
 package org.dk.selenk.klocator.locatorbuilder.treelocatorbuilder
 
+import org.dk.selenk.common.widget.Widget
 import org.dk.selenk.klocator.locatorbuilder.predicatebuilder.XpathPredicateBuilder
-import org.dk.selenk.klocator.widget.Widget
 import org.openqa.selenium.By
 
 class XpathLocatorBuilder : TreeLocatorBuilder<XpathPredicateBuilder>() {

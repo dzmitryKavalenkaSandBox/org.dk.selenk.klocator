@@ -1,8 +1,8 @@
 package org.dk.selenk.klocator.locatorbuilder.treelocatorbuilder
 
+import org.dk.selenk.common.widget.Widget
 import org.dk.selenk.klocator.locatorbuilder.LocatorBuilder
 import org.dk.selenk.klocator.locatorbuilder.predicatebuilder.PredicateBuilder
-import org.dk.selenk.klocator.widget.Widget
 
 abstract class TreeLocatorBuilder<PREDICATE_BUILDER : PredicateBuilder<PREDICATE_BUILDER>> : LocatorBuilder() {
 
