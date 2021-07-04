@@ -9,16 +9,16 @@ abstract class PredicateBuilder<PREDICATE_BUILDER : PredicateBuilder<PREDICATE_B
 
     companion object {
         fun Attribute.asPredicateString(predicateBuilder: PredicateBuilder<*>): String = when {
-            predicateBuilder is XpathPredicateBuilder && SelenKConfig.automationType == AutomationType.XcUiTest -> attribute()
+            predicateBuilder !is XpathPredicateBuilder && SelenKConfig.automationType == AutomationType.XcUiTest -> attribute()
             else -> "@${attribute()}"
         }
     }
 
     protected val stringBuilder: StringBuilder = StringBuilder()
 
-    infix abstract fun <T> Attribute.isEquals(value: T): XpathPredicateBuilder
+    infix abstract fun <T> Attribute.isEquals(value: T): PREDICATE_BUILDER
 
-    infix abstract fun <T> Attribute.contains(value: T): XpathPredicateBuilder
+    infix abstract fun <T> Attribute.contains(value: T): PREDICATE_BUILDER
 
     abstract infix fun and(predicateBuilder: PREDICATE_BUILDER.() -> Unit): PREDICATE_BUILDER
 

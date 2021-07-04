@@ -2,7 +2,7 @@ package org.dk.selenk.klocator.locatorbuilder.predicatebuilder
 
 import org.dk.selenk.common.attribute.Attribute
 
-class XpathPredicateBuilder : PredicateBuilder<XpathPredicateBuilder>() {
+open class XpathPredicateBuilder : PredicateBuilder<XpathPredicateBuilder>() {
 
     companion object {
         inline fun predicate(performTask: XpathPredicateBuilder.() -> Unit): String {
@@ -13,12 +13,72 @@ class XpathPredicateBuilder : PredicateBuilder<XpathPredicateBuilder>() {
     }
 
     override infix fun <T> Attribute.isEquals(value: T): XpathPredicateBuilder {
-        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} = $value")
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} = '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.isEquals(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} = '${value(XpathFunction())}'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.isNotEquals(value: T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} != '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.isNotEquals(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} != '${value(XpathFunction())}'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.lessThen(value: T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} < '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.lessThen(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} < '${value(XpathFunction())}'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.lessOrEqual(value: T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} <= '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.lessOrEqual(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} <= '${value(XpathFunction())}'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.greaterThen(value: T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} > '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.greaterThen(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} > '${value(XpathFunction())}'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.greaterOrEqual(value: T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} >= '$value'")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.greaterOrEqual(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@XpathPredicateBuilder)} >= '${value(XpathFunction())}'")
         return this@XpathPredicateBuilder
     }
 
     override infix fun <T> Attribute.contains(value: T): XpathPredicateBuilder {
-        stringBuilder.append("contains(${asPredicateString(this@XpathPredicateBuilder)}, $value)")
+        stringBuilder.append("contains(${asPredicateString(this@XpathPredicateBuilder)}, '$value')")
+        return this@XpathPredicateBuilder
+    }
+
+    infix fun <T> Attribute.contains(value: XpathFunction.() -> T): XpathPredicateBuilder {
+        stringBuilder.append("contains(${asPredicateString(this@XpathPredicateBuilder)}, '${value(XpathFunction())}')")
         return this@XpathPredicateBuilder
     }
 
