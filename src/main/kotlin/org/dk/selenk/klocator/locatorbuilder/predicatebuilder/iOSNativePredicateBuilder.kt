@@ -39,6 +39,11 @@ open class iOSNativePredicateBuilder : PredicateBuilder<iOSNativePredicateBuilde
         return this@iOSNativePredicateBuilder
     }
 
+    infix fun <T> Attribute.inPredicate(value: T): iOSNativePredicateBuilder {
+        stringBuilder.append("${asPredicateString(this@iOSNativePredicateBuilder)} IN {${value.escapeStringValue()}}")
+        return this@iOSNativePredicateBuilder
+    }
+
     override fun and(predicateBuilder: iOSNativePredicateBuilder.() -> Unit) = apply {
         stringBuilder.append(" AND ")
         stringBuilder.append(predicate(predicateBuilder))

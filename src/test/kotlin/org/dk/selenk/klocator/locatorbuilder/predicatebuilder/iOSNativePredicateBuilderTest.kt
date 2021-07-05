@@ -14,7 +14,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 
 @Suppress("ClassName")
-class iOSPredicateBuilderTest {
+class iOSNativePredicateBuilderTest {
 
     @Test
     fun `type predicate resolved correctly`() {
@@ -124,7 +124,7 @@ class iOSPredicateBuilderTest {
 
     @Suppress("SpellCheckingInspection")
     @Test
-    fun `endswith ignore case predicate resolved correctly`() {
+    fun `endswith predicate resolved correctly`() {
         val config: SelenKConfig = mockk()
         every { config.automationType } returns AutomationType.XcUiTest
 
@@ -132,6 +132,21 @@ class iOSPredicateBuilderTest {
 
         val actualPredicate: String = predicate {
             typeEquals(Image) and { Text endsWith "bla" }
+        }
+
+        assertThat(expectedPredicateString, `is`(actualPredicate))
+    }
+
+    @Suppress("SpellCheckingInspection")
+    @Test
+    fun `in predicate resolved correctly`() {
+        val config: SelenKConfig = mockk()
+        every { config.automationType } returns AutomationType.XcUiTest
+
+        val expectedPredicateString = "type == \"${Image.widget()}\" AND ${Text.asPredicateString(iOSNativePredicateBuilder())} IN {\"bla\", \"bla\"}"
+
+        val actualPredicate: String = predicate {
+            typeEquals(Image) and { Text inPredicate  "bla\", \"bla" }
         }
 
         assertThat(expectedPredicateString, `is`(actualPredicate))
