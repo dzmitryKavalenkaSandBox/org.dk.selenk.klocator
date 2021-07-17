@@ -1,4 +1,4 @@
-rootProject.name = "org.dk.selenk.klocator"
+rootProject.name = "klocator"
 
 pluginManagement {
     resolutionStrategy {
